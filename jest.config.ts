@@ -7,7 +7,7 @@ const config: Config = {
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   testEnvironment: 'node',
-  transform:{
+  transform: {
     '.+\\.ts$': 'ts-jest'
   }
 
