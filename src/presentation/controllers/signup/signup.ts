@@ -1,11 +1,8 @@
-import { HttpRequest, HttpResponse, Controller, EmailValidator } from "../protocols/index"
-import { badRequest, serverError } from "../helpers/http-helper"
-import { MissingParamError, InvalidParamError } from "../errors/index"
-import { AddAccount } from "../../domain/usecases/add-account"
-
+import type { HttpRequest, HttpResponse, Controller, EmailValidator, AddAccount } from './signup-protocols'
+import { badRequest, serverError } from '../../helpers/http-helper'
+import { MissingParamError, InvalidParamError } from '../../errors/index'
 
 export class SignUpController implements Controller {
-
     private readonly emailValidator: EmailValidator
     private readonly addAccount: AddAccount
 
@@ -13,6 +10,7 @@ export class SignUpController implements Controller {
       this.emailValidator = emailValidator
       this.addAccount = addAccount
     }
+
   handle (httpRequest: HttpRequest): HttpResponse {
     try {
         const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
@@ -21,12 +19,13 @@ export class SignUpController implements Controller {
             return badRequest(new MissingParamError(field))
             }
         }
-        const {name, email, password, passwordConfirmation} = httpRequest.body
+        const { name, email, password, passwordConfirmation } = httpRequest.body
         if (password !== passwordConfirmation) {
         return badRequest(new InvalidParamError('passwordConfirmation'))
         }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const isValid = this.emailValidator.isValid(email)
-        if(!isValid) {
+        if (!isValid) {
         return badRequest(new InvalidParamError('email'))
         }
         this.addAccount.add({
