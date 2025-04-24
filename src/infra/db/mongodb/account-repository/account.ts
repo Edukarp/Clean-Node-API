@@ -11,7 +11,6 @@ export class AccountMongoRepository implements AddAccountRepository {
         if (!account) {
             throw new Error('Account not found')
         }
-        const { _id, ...accountWithoutId } = account
-        return Object.assign({}, accountWithoutId, { id: _id }) as unknown as AccountModel
+        return MongoHelper.map(account)
     }
 }
