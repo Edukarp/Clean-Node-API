@@ -3,10 +3,7 @@ import { type Collection, MongoClient } from 'mongodb'
 export const MongoHelper = {
     client: null as unknown as MongoClient,
     connect: async (uri: string): Promise<void> => {
-        if (!process.env.MONGO_URL) {
-            throw new Error('MONGO_URL is not defined in the environment variables')
-        }
-        MongoHelper.client = await MongoClient.connect(process.env.MONGO_URL)
+        MongoHelper.client = await MongoClient.connect(uri)
     },
 
     disconnect: async (): Promise<void> => {
