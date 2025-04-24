@@ -1,16 +1,19 @@
-import { MongoClient } from 'mongodb'
+import { type Collection, MongoClient } from 'mongodb'
 
 export const MongoHelper = {
     client: null as unknown as MongoClient,
     connect: async (uri: string): Promise<void> => {
-        MongoHelper.client = await MongoClient.connect(process.env.MONGO_URL,
-            {
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            })
+        if (!process.env.MONGO_URL) {
+            throw new Error('MONGO_URL is not defined in the environment variables')
+        }
+        MongoHelper.client = await MongoClient.connect(process.env.MONGO_URL)
     },
 
     disconnect: async (): Promise<void> => {
         await MongoHelper.client.close()
+    },
+
+    getCollection (name: string): Collection {
+        return MongoHelper.client.db().collection(name)
     }
 }
