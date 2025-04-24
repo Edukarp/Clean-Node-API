@@ -15,8 +15,10 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^5.1.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.5.14",
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^22.14.1",
     "@types/validator": "^13.15.0",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
@@ -36,6 +38,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "clean-node-api": "file:",
+    "mongodb": "^6.16.0",
     "validator": "^13.15.0"
   }
 }
